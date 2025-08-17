@@ -9,7 +9,13 @@ const IconCash = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w
 const IconShieldCheck = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.944A12.02 12.02 0 0012 22a12.02 12.02 0 009-1.056c.343-.362.668-.74.98-1.134a11.955 11.955 0 00-1.968-13.79z" /></svg>;
 const IconUserGroup = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>;
 const IconLightBulb = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>;
-const IconArrow = ({ direction }) => {
+
+// Definición del tipo para las props del icono de flecha
+type IconArrowProps = {
+  direction: 'left' | 'right';
+};
+
+const IconArrow = ({ direction }: IconArrowProps) => {
     const rotations = { left: 'rotate-180', right: 'rotate-0' };
     return <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transition-transform duration-300 ${rotations[direction]}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>;
 };
@@ -39,9 +45,9 @@ const slidesData: SlideData[] = [
 ];
 
 // --- Sub-componente para renderizar cada tipo de diapositiva (DISEÑO MEJORADO) ---
-const SlideComponent = ({ slide, isCurrent }) => {
+const SlideComponent = ({ slide, isCurrent }: { slide: SlideData, isCurrent: boolean }) => {
     const animationClass = (delay = 300) => `transition-all duration-700 ${isCurrent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`;
-    const SlideTitle = ({ text }) => <h2 className={`text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center ${animationClass()}`}>{text}</h2>;
+    const SlideTitle = ({ text }: { text: string }) => <h2 className={`text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center ${animationClass()}`}>{text}</h2>;
 
     switch (slide.type) {
         case 'title':
@@ -69,7 +75,7 @@ const SlideComponent = ({ slide, isCurrent }) => {
                 <div className="w-full max-w-6xl">
                     <SlideTitle text={slide.title} />
                     <div className="grid md:grid-cols-2 gap-8">
-                        {slide.points.map((point, i) => (
+                        {slide.points.map((point: any, i: number) => (
                             <div key={i} className={`flex items-start bg-white p-6 rounded-xl shadow-md ${animationClass(400 + i * 100)}`}>
                                 <div className="flex-shrink-0 text-amber-500">{point.icon}</div>
                                 <div className="ml-5">
@@ -86,7 +92,7 @@ const SlideComponent = ({ slide, isCurrent }) => {
                 <div className="w-full max-w-4xl text-center">
                     <SlideTitle text={slide.title} />
                     <div className="space-y-4">
-                        {slide.points.map((point, i) => (
+                        {slide.points.map((point: string, i: number) => (
                             <div key={i} className={`bg-red-50 border-l-4 border-red-400 text-red-800 p-4 text-left font-semibold text-lg rounded-r-md ${animationClass(400 + i * 100)}`}>
                                 {point}
                             </div>
@@ -99,7 +105,7 @@ const SlideComponent = ({ slide, isCurrent }) => {
                 <div className="w-full max-w-4xl text-center">
                     <SlideTitle text={slide.title} />
                     <div className="space-y-4">
-                        {slide.points.map((point, i) => (
+                        {slide.points.map((point: string, i: number) => (
                             <div key={i} className={`bg-green-50 border-l-4 border-green-500 text-green-800 p-4 text-left font-semibold text-lg rounded-r-md ${animationClass(400 + i * 100)}`}>
                                 {point}
                             </div>
@@ -128,7 +134,7 @@ const SlideComponent = ({ slide, isCurrent }) => {
                 <div className="w-full max-w-6xl">
                     <SlideTitle text={slide.title} />
                     <div className="grid md:grid-cols-4 gap-4 text-center">
-                        {slide.steps.map((step, i) => (
+                        {slide.steps.map((step: any, i: number) => (
                             <div key={i} className={`relative ${animationClass(400 + i * 100)}`}>
                                 <div className="bg-white p-6 rounded-xl shadow-md h-full">
                                     <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-amber-400 text-gray-900 font-bold w-10 h-10 rounded-full flex items-center justify-center border-4 border-gray-100">{i + 1}</div>
@@ -146,7 +152,7 @@ const SlideComponent = ({ slide, isCurrent }) => {
                 <div className="w-full max-w-6xl">
                     <SlideTitle text={slide.title} />
                     <div className="grid md:grid-cols-3 gap-8">
-                        {slide.advantages.map((adv, i) => (
+                        {slide.advantages.map((adv: any, i: number) => (
                             <div key={i} className={`bg-white p-8 rounded-xl shadow-md text-center ${animationClass(400 + i * 100)}`}>
                                 <div className="w-20 h-20 bg-gray-100 rounded-full mx-auto flex items-center justify-center">{adv.icon}</div>
                                 <h3 className="text-xl font-bold text-gray-900 mt-5">{adv.title}</h3>
@@ -161,7 +167,7 @@ const SlideComponent = ({ slide, isCurrent }) => {
                 <div className="w-full max-w-5xl">
                     <SlideTitle text={slide.title} />
                     <div className="space-y-4">
-                        {slide.channels.map((channel, i) => (
+                        {slide.channels.map((channel: string, i: number) => (
                             <div key={i} className={`bg-white p-4 rounded-xl shadow-sm flex items-center ${animationClass(400 + i * 100)}`}>
                                 <div className="bg-amber-400 text-gray-900 font-bold w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center mr-4">{i + 1}</div>
                                 <p className="text-gray-700">{channel}</p>
@@ -175,7 +181,7 @@ const SlideComponent = ({ slide, isCurrent }) => {
                 <div className="w-full max-w-5xl text-center">
                     <SlideTitle text={slide.title} />
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {slide.items.map((item, i) => (
+                        {slide.items.map((item: any, i: number) => (
                             <div key={i} className={`bg-white border-b-4 border-amber-400 p-6 shadow-lg rounded-lg ${animationClass(400 + i * 100)}`}>
                                 <h3 className="text-md font-bold text-gray-800">{item.name}</h3>
                                 <p className="text-3xl font-bold text-gray-900 mt-2">{item.amount}</p>
@@ -189,11 +195,11 @@ const SlideComponent = ({ slide, isCurrent }) => {
                 <div className="w-full max-w-6xl">
                     <SlideTitle text={slide.title} />
                     <div className="grid md:grid-cols-3 gap-8">
-                        {slide.phases.map((phase, i) => (
+                        {slide.phases.map((phase: any, i: number) => (
                             <div key={i} className={`bg-white p-6 rounded-xl shadow-lg border-t-4 border-amber-400 ${animationClass(400 + i * 100)}`}>
                                 <h3 className="text-2xl font-bold text-gray-900">{phase.year}</h3>
                                 <ul className="list-disc list-inside text-gray-600 mt-4 space-y-2">
-                                    {phase.goals.map((goal, j) => <li key={j}>{goal}</li>)}
+                                    {phase.goals.map((goal: string, j: number) => <li key={j}>{goal}</li>)}
                                 </ul>
                             </div>
                         ))}
@@ -221,9 +227,9 @@ const SlideComponent = ({ slide, isCurrent }) => {
 // --- Componente Principal de la Aplicación ---
 export default function PresentationPage() {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-    const [touchStart, setTouchStart] = useState(null);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
     
-    const navigate = useCallback((step) => {
+    const navigate = useCallback((step: number) => {
         const newIndex = currentSlideIndex + step;
         if (newIndex >= 0 && newIndex < slidesData.length) {
             setCurrentSlideIndex(newIndex);
@@ -231,7 +237,7 @@ export default function PresentationPage() {
     }, [currentSlideIndex]);
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
+        const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
             else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
         };
@@ -239,11 +245,11 @@ export default function PresentationPage() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [navigate]);
     
-    const handleTouchStart = (e) => {
+    const handleTouchStart = (e: React.TouchEvent) => {
         setTouchStart(e.touches[0].clientX);
     };
 
-    const handleTouchMove = (e) => {
+    const handleTouchMove = (e: React.TouchEvent) => {
         if (touchStart === null) return;
         const currentX = e.touches[0].clientX;
         const diffX = touchStart - currentX;
