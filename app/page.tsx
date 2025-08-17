@@ -20,7 +20,6 @@ interface BreakSlide extends BaseSlide {
   title: string;
   subtitle: string;
 }
-// CORRECCIÓN: Se cambió JSX.Element por React.ReactNode para compatibilidad
 interface IconPoint { icon: React.ReactNode; title: string; text: string; }
 interface ProblemSlide extends BaseSlide {
   type: 'problem';
@@ -237,6 +236,8 @@ export default function PresentationPage() {
       .slide.active .animated-content { animation: fadeInUp 0.8s ease-out forwards; }
       .nav-button { position: fixed; bottom: 2rem; z-index: 20; background-color: #ffffff; color: #111827; padding: 0.75rem 1.5rem; border-radius: 9999px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1); }
       .nav-button:hover { background-color: #FFC107; color: #111827; transform: scale(1.05); }
+      .side-nav-button { position: fixed; top: 50%; z-index: 20; background-color: rgba(255, 255, 255, 0.8); color: #111827; padding: 1rem; border-radius: 9999px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 14px 0 rgba(0,0,0,0.1); transform: translateY(-50%); }
+      .side-nav-button:hover { background-color: #FFC107; transform: translateY(-50%) scale(1.1); }
       .progress-bar { position: fixed; top: 0; left: 0; height: 5px; background-color: #FFC107; z-index: 30; transition: width 0.3s ease; }
     `}</style>
   );
@@ -254,11 +255,11 @@ export default function PresentationPage() {
             {slide.type === 'title' && (
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="text-center md:text-left">
-                    <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gray-900">{slide.content.mainTitle}</h1>
-                    <p className="text-xl md:text-2xl font-semibold text-gray-600 mt-2">{slide.content.subtitle}</p>
+                    <h1 className="text-5xl md:text-7xl 2xl:text-9xl font-black uppercase tracking-tighter text-gray-900">{slide.content.mainTitle}</h1>
+                    <p className="text-xl md:text-2xl 2xl:text-3xl font-semibold text-gray-600 mt-2">{slide.content.subtitle}</p>
                     <div className="mt-8 border-l-4 border-yellow-400 pl-6">
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{slide.content.presentationTitle}</h2>
-                      <p className="mt-1 text-md text-gray-500">{slide.content.details}</p>
+                      <h2 className="text-2xl md:text-3xl 2xl:text-4xl font-bold text-gray-900">{slide.content.presentationTitle}</h2>
+                      <p className="mt-1 text-md 2xl:text-lg text-gray-500">{slide.content.details}</p>
                     </div>
                 </div>
                 <div className="hidden md:block">
@@ -269,20 +270,20 @@ export default function PresentationPage() {
             
             {slide.type === 'break' && (
                 <div className="text-center">
-                    <p className="text-yellow-500 font-bold">{slide.subtitle}</p>
-                    <h2 className="text-6xl md:text-8xl font-black text-gray-900 uppercase tracking-tighter">{slide.title}</h2>
+                    <p className="text-yellow-500 font-bold text-lg">{slide.subtitle}</p>
+                    <h2 className="text-6xl md:text-8xl 2xl:text-9xl font-black text-gray-900 uppercase tracking-tighter">{slide.title}</h2>
                 </div>
             )}
 
             {slide.type === 'problem' && (
                 <div>
-                     <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-12 text-center">{slide.title}</h2>
+                     <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900 mb-12 text-center">{slide.title}</h2>
                      <div className="grid md:grid-cols-3 gap-8">
                         {slide.points.map((point, i) => (
                             <div key={i} className="text-center bg-gray-100 p-8 rounded-2xl">
                                 {point.icon}
-                                <h3 className="text-xl font-bold text-gray-900 mt-4">{point.title}</h3>
-                                <p className="text-gray-600 mt-2">{point.text}</p>
+                                <h3 className="text-xl 2xl:text-2xl font-bold text-gray-900 mt-4">{point.title}</h3>
+                                <p className="text-gray-600 mt-2 2xl:text-lg">{point.text}</p>
                             </div>
                         ))}
                      </div>
@@ -291,13 +292,13 @@ export default function PresentationPage() {
             
             {slide.type === 'solution' && (
                 <div>
-                     <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-12 text-center">{slide.title}</h2>
+                     <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900 mb-12 text-center">{slide.title}</h2>
                      <div className="grid md:grid-cols-3 gap-8">
                         {slide.points.map((point, i) => (
                             <div key={i} className="text-center bg-gray-100 p-8 rounded-2xl">
                                 {point.icon}
-                                <h3 className="text-xl font-bold text-gray-900 mt-4">{point.title}</h3>
-                                <p className="text-gray-600 mt-2">{point.text}</p>
+                                <h3 className="text-xl 2xl:text-2xl font-bold text-gray-900 mt-4">{point.title}</h3>
+                                <p className="text-gray-600 mt-2 2xl:text-lg">{point.text}</p>
                             </div>
                         ))}
                      </div>
@@ -306,34 +307,34 @@ export default function PresentationPage() {
 
             {slide.type === 'market' && (
               <div className="text-center">
-                <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-12">{slide.title}</h2>
+                <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900 mb-12">{slide.title}</h2>
                 <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
                   {slide.stats.map((stat, i) => (
                     <div key={i} className="bg-white p-8 rounded-2xl shadow-xl border">
-                      <h3 className="text-2xl font-bold text-gray-900">{stat.title}</h3>
-                      <p className="text-6xl font-black text-yellow-400 my-3">{stat.value}</p>
-                      <p className="text-gray-600">{stat.text}</p>
+                      <h3 className="text-2xl 2xl:text-3xl font-bold text-gray-900">{stat.title}</h3>
+                      <p className="text-6xl 2xl:text-7xl font-black text-yellow-400 my-3">{stat.value}</p>
+                      <p className="text-gray-600 2xl:text-lg">{stat.text}</p>
                     </div>
                   ))}
                 </div>
-                <p className="mt-10 text-xl font-semibold text-gray-700 max-w-3xl mx-auto">Conclusión Estratégica: <span className="text-gray-900">{slide.conclusion}</span>.</p>
+                <p className="mt-10 text-xl 2xl:text-2xl font-semibold text-gray-700 max-w-3xl mx-auto">Conclusión Estratégica: <span className="text-gray-900">{slide.conclusion}</span>.</p>
               </div>
             )}
 
             {slide.type === 'price_analysis' && (
                 <div>
-                    <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 text-center">{slide.title}</h2>
-                    <p className="text-center text-gray-600 mb-10 max-w-2xl mx-auto">{slide.intro}</p>
+                    <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900 mb-4 text-center">{slide.title}</h2>
+                    <p className="text-center text-gray-600 mb-10 max-w-2xl mx-auto 2xl:text-lg">{slide.intro}</p>
                     <div className="grid md:grid-cols-3 gap-8 text-center">
                         {slide.comparison.map((item, i) => (
                             <div key={i} className={`p-8 rounded-2xl ${i === 1 ? 'bg-gray-900 text-white shadow-2xl transform scale-105' : 'bg-gray-100'}`}>
-                                <h3 className={`font-bold text-xl ${i === 1 ? 'text-white' : 'text-gray-900'}`}>{item.tier}</h3>
-                                <p className={`text-4xl font-black my-3 ${i === 1 ? 'text-yellow-400' : 'text-gray-900'}`}>{item.price}</p>
-                                <p className={`${i === 1 ? 'text-gray-300' : 'text-gray-600'}`}>{item.description}</p>
+                                <h3 className={`font-bold text-xl 2xl:text-2xl ${i === 1 ? 'text-white' : 'text-gray-900'}`}>{item.tier}</h3>
+                                <p className={`text-4xl 2xl:text-5xl font-black my-3 ${i === 1 ? 'text-yellow-400' : 'text-gray-900'}`}>{item.price}</p>
+                                <p className={`${i === 1 ? 'text-gray-300' : 'text-gray-600'} 2xl:text-base`}>{item.description}</p>
                             </div>
                         ))}
                     </div>
-                     <p className="mt-10 text-center text-xl font-semibold text-gray-700">{slide.conclusion}</p>
+                     <p className="mt-10 text-center text-xl 2xl:text-2xl font-semibold text-gray-700">{slide.conclusion}</p>
                 </div>
             )}
 
@@ -341,29 +342,29 @@ export default function PresentationPage() {
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="text-left">
                         <p className="text-yellow-500 font-bold">{slide.subtitle}</p>
-                        <h2 className="text-4xl md:text-5xl font-black text-gray-900 mt-2">{slide.title}</h2>
-                        <p className="text-lg text-gray-600 mt-4">{slide.intro}</p>
+                        <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900 mt-2">{slide.title}</h2>
+                        <p className="text-lg 2xl:text-xl text-gray-600 mt-4">{slide.intro}</p>
                     </div>
                     <div className="bg-white rounded-2xl shadow-2xl border overflow-hidden">
                         <table className="w-full text-left">
                             <thead className="bg-gray-50">
                                 <tr>
-                                    <th className="p-4 text-sm font-semibold text-gray-600 uppercase tracking-wider">Componente</th>
-                                    <th className="p-4 text-sm font-semibold text-gray-600 uppercase tracking-wider text-center">Porcentaje</th>
-                                    <th className="p-4 text-sm font-semibold text-gray-600 uppercase tracking-wider text-right">Valor / m²</th>
+                                    <th className="p-4 text-sm 2xl:text-base font-semibold text-gray-600 uppercase tracking-wider">Componente</th>
+                                    <th className="p-4 text-sm 2xl:text-base font-semibold text-gray-600 uppercase tracking-wider text-center">Porcentaje</th>
+                                    <th className="p-4 text-sm 2xl:text-base font-semibold text-gray-600 uppercase tracking-wider text-right">Valor / m²</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
                                 {slide.table.map((row, i) => (
                                     <tr key={i} className={`${row.type === 'total_cost' ? 'bg-gray-100 font-bold' : ''} ${row.type === 'profit' ? 'bg-green-100 font-bold' : ''}`}>
-                                        <td className="p-4 whitespace-nowrap">{row.component}</td>
+                                        <td className="p-4 whitespace-nowrap 2xl:text-lg">{row.component}</td>
                                         <td className="p-4 whitespace-nowrap text-center align-middle">
                                             <div className="w-full bg-gray-200 rounded-full h-6 relative">
                                                 <div className={`h-6 rounded-full ${row.type === 'cost' ? 'bg-red-400' : row.type === 'total_cost' ? 'bg-red-600' : 'bg-green-500'}`} style={{ width: row.percentage }}></div>
                                                 <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white mix-blend-lighten">{row.percentage}</span>
                                             </div>
                                         </td>
-                                        <td className={`p-4 whitespace-nowrap text-right text-lg font-semibold ${row.type === 'profit' ? 'text-green-600' : 'text-gray-800'}`}>{row.value}</td>
+                                        <td className={`p-4 whitespace-nowrap text-right text-lg 2xl:text-xl font-semibold ${row.type === 'profit' ? 'text-green-600' : 'text-gray-800'}`}>{row.value}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -376,29 +377,29 @@ export default function PresentationPage() {
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="text-left">
                         <p className="text-yellow-500 font-bold">{slide.subtitle}</p>
-                        <h2 className="text-4xl md:text-5xl font-black text-gray-900 mt-2">{slide.title}</h2>
+                        <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900 mt-2">{slide.title}</h2>
                         <div className="mt-8 space-y-6">
                             {slide.points.map((point, i) => (
                                 <div key={i} className="flex items-start">
                                     <IconCheck />
                                     <div>
-                                        <h3 className="font-bold text-lg text-gray-900">{point.title}</h3>
-                                        <p className="text-gray-600">{point.text}</p>
+                                        <h3 className="font-bold text-lg 2xl:text-xl text-gray-900">{point.title}</h3>
+                                        <p className="text-gray-600 2xl:text-lg">{point.text}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     </div>
                     <div className="bg-gray-100 p-8 rounded-2xl">
-                        <h3 className="text-2xl font-bold text-center text-gray-900 mb-6">Fases de Pago del Proyecto</h3>
+                        <h3 className="text-2xl 2xl:text-3xl font-bold text-center text-gray-900 mb-6">Fases de Pago del Proyecto</h3>
                         <div className="space-y-4">
                             {slide.phases.map((phase, i) => (
                                 <div key={i} className={`p-4 rounded-lg flex justify-between items-center ${i === 0 ? 'bg-gray-900 text-white' : 'bg-white'}`}>
                                     <div>
-                                        <p className={`font-bold text-lg ${i === 0 ? 'text-white' : 'text-gray-900'}`}>{phase.name}</p>
-                                        <p className={`text-sm ${i === 0 ? 'text-gray-300' : 'text-gray-600'}`}>{phase.detail}</p>
+                                        <p className={`font-bold text-lg 2xl:text-xl ${i === 0 ? 'text-white' : 'text-gray-900'}`}>{phase.name}</p>
+                                        <p className={`text-sm 2xl:text-base ${i === 0 ? 'text-gray-300' : 'text-gray-600'}`}>{phase.detail}</p>
                                     </div>
-                                    <p className={`text-3xl font-black ${i === 0 ? 'text-yellow-400' : 'text-gray-900'}`}>{phase.percentage}</p>
+                                    <p className={`text-3xl 2xl:text-4xl font-black ${i === 0 ? 'text-yellow-400' : 'text-gray-900'}`}>{phase.percentage}</p>
                                 </div>
                             ))}
                         </div>
@@ -408,13 +409,13 @@ export default function PresentationPage() {
             
             {slide.type === 'investment' && (
                 <div className="text-center">
-                    <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-12">{slide.title}</h2>
+                    <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900 mb-12">{slide.title}</h2>
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {slide.items.map((item, i) => (
                             <div key={i} className="bg-white border p-6 rounded-2xl shadow-lg">
-                                <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
-                                <p className="text-3xl font-bold text-yellow-500 mt-2">{item.amount}</p>
-                                <p className="text-sm text-gray-600 mt-1">{item.detail}</p>
+                                <h3 className="text-lg 2xl:text-xl font-bold text-gray-900">{item.name}</h3>
+                                <p className="text-3xl 2xl:text-4xl font-bold text-yellow-500 mt-2">{item.amount}</p>
+                                <p className="text-sm 2xl:text-base text-gray-600 mt-1">{item.detail}</p>
                             </div>
                         ))}
                     </div>
@@ -424,14 +425,14 @@ export default function PresentationPage() {
             {slide.type === 'recovery' && (
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="text-center md:text-left">
-                        <h2 className="text-4xl md:text-5xl font-black text-gray-900">{slide.title}</h2>
+                        <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900">{slide.title}</h2>
                     </div>
                     <div className="space-y-8">
                         {slide.points.map((point, i) => (
                              <div key={i} className={`p-6 rounded-xl ${i === 0 ? 'bg-yellow-100 border-yellow-400 border' : 'bg-gray-100'}`}>
-                                <h3 className="text-xl font-bold text-gray-900">{point.title}</h3>
-                                <p className={`text-5xl font-black my-2 ${i === 0 ? 'text-yellow-500' : 'text-gray-900'}`}>{point.value}</p>
-                                <p className="text-gray-600 text-sm">{point.text}</p>
+                                <h3 className="text-xl 2xl:text-2xl font-bold text-gray-900">{point.title}</h3>
+                                <p className={`text-5xl 2xl:text-6xl font-black my-2 ${i === 0 ? 'text-yellow-500' : 'text-gray-900'}`}>{point.value}</p>
+                                <p className="text-gray-600 text-sm 2xl:text-base">{point.text}</p>
                             </div>
                         ))}
                     </div>
@@ -441,14 +442,14 @@ export default function PresentationPage() {
             {slide.type === 'message' && (
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     <div className="text-center md:text-left">
-                        <h2 className="text-4xl md:text-5xl font-black text-gray-900">{slide.title}</h2>
-                        <p className="text-lg text-gray-600 mt-4">{slide.intro}</p>
+                        <h2 className="text-4xl md:text-5xl 2xl:text-6xl font-black text-gray-900">{slide.title}</h2>
+                        <p className="text-lg 2xl:text-xl text-gray-600 mt-4">{slide.intro}</p>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                         {slide.points.map((point, i) => (
                             <div key={i} className="bg-gray-100 p-6 rounded-lg text-center">
-                                <h3 className="font-bold text-gray-900 text-md">{point.title}</h3>
-                                <p className="text-xs text-gray-600 mt-1">{point.text}</p>
+                                <h3 className="font-bold text-gray-900 text-md 2xl:text-lg">{point.title}</h3>
+                                <p className="text-xs 2xl:text-sm text-gray-600 mt-1">{point.text}</p>
                             </div>
                         ))}
                     </div>
@@ -457,12 +458,12 @@ export default function PresentationPage() {
 
             {slide.type === 'contact' && (
               <div className="text-center text-gray-800 p-4">
-                <h2 className="text-4xl sm:text-5xl md:text-6xl font-black">{slide.content.mainTitle}</h2>
-                <p className="mt-6 max-w-2xl mx-auto text-md sm:text-lg text-gray-600">{slide.content.subtitle}</p>
+                <h2 className="text-4xl sm:text-5xl md:text-6xl 2xl:text-7xl font-black">{slide.content.mainTitle}</h2>
+                <p className="mt-6 max-w-2xl mx-auto text-md sm:text-lg 2xl:text-xl text-gray-600">{slide.content.subtitle}</p>
                 <div className="mt-10">
-                  <h3 className="text-2xl font-bold text-gray-900">{slide.content.company}</h3>
-                  <p className="text-gray-600 mt-2 text-base">{slide.content.email} | {slide.content.phone}</p>
-                  <p className="text-gray-600 text-base">{slide.content.location}</p>
+                  <h3 className="text-2xl 2xl:text-3xl font-bold text-gray-900">{slide.content.company}</h3>
+                  <p className="text-gray-600 mt-2 text-base 2xl:text-lg">{slide.content.email} | {slide.content.phone}</p>
+                  <p className="text-gray-600 text-base 2xl:text-lg">{slide.content.location}</p>
                 </div>
               </div>
             )}
@@ -470,9 +471,15 @@ export default function PresentationPage() {
           </section>
         ))}
 
-        {/* Controles de Navegación y Barra de Progreso */}
-        {currentSlide > 0 && <button id="prevBtn" onClick={prevSlide} className="nav-button">&larr; Anterior</button>}
-        {currentSlide < totalSlides - 1 && <button id="nextBtn" onClick={nextSlide} className="nav-button">Siguiente &rarr;</button>}
+        {/* Controles de Navegación */}
+        {currentSlide > 0 && <button onClick={prevSlide} className="side-nav-button left-8 hidden md:block">&larr;</button>}
+        {currentSlide < totalSlides - 1 && <button onClick={nextSlide} className="side-nav-button right-8 hidden md:block">&rarr;</button>}
+        
+        <div className="md:hidden">
+            {currentSlide > 0 && <button onClick={prevSlide} className="nav-button left-4">&larr;</button>}
+            {currentSlide < totalSlides - 1 && <button onClick={nextSlide} className="nav-button right-4">&rarr;</button>}
+        </div>
+
         <div id="progressBar" className="progress-bar" style={{ width: `${progressPercentage}%` }}></div>
       </div>
     </>
