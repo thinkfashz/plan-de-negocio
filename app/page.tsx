@@ -10,20 +10,14 @@ const IconShieldCheck = () => <svg xmlns="http://www.w3.org/2000/svg" className=
 const IconUserGroup = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>;
 const IconLightBulb = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>;
 
-// Definición del tipo para las props del icono de flecha
-type IconArrowProps = {
-  direction: 'left' | 'right';
-};
-
+type IconArrowProps = { direction: 'left' | 'right'; };
 const IconArrow = ({ direction }: IconArrowProps) => {
     const rotations = { left: 'rotate-180', right: 'rotate-0' };
     return <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transition-transform duration-300 ${rotations[direction]}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>;
 };
 
-// --- Definición de Tipos ---
 type SlideData = { type: string; [key: string]: any; };
 
-// --- Contenido del Plan de Negocio ---
 const slidesData: SlideData[] = [
   { type: 'title', mainTitle: "CASAS FABRICK", subtitle: "PLAN DE INVERSIÓN", slogan: "Construimos casas, construimos historias." },
   { type: 'vision', title: "Nuestra Visión", text: "Ser la empresa constructora líder en la Región del Maule, reconocida por nuestra calidad, transparencia y compromiso inquebrantable con la satisfacción del cliente, transformando el estándar de la construcción de viviendas." },
@@ -44,10 +38,9 @@ const slidesData: SlideData[] = [
   { type: 'contact', title: "Construyamos Juntos", subtitle: "Estamos buscando socios estratégicos para revolucionar el mercado de la construcción.", email: "contacto@casasfabrick.cl", phone: "+56 9 3012 1625", slogan: "Casas Fabrick: Construimos casas, construimos historias." }
 ];
 
-// --- Sub-componente para renderizar cada tipo de diapositiva (DISEÑO MEJORADO) ---
 const SlideComponent = ({ slide, isCurrent }: { slide: SlideData, isCurrent: boolean }) => {
     const animationClass = (delay = 300) => `transition-all duration-700 ${isCurrent ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`;
-    const SlideTitle = ({ text }: { text: string }) => <h2 className={`text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center ${animationClass()}`}>{text}</h2>;
+    const SlideTitle = ({ text }: { text: string }) => <h2 className={`text-4xl md:text-5xl font-bold text-gray-900 mb-12 text-center ${animationClass()}`}>{text}</h2>;
 
     switch (slide.type) {
         case 'title':
@@ -224,11 +217,18 @@ const SlideComponent = ({ slide, isCurrent }: { slide: SlideData, isCurrent: boo
     }
 };
 
-// --- Componente Principal de la Aplicación ---
 export default function PresentationPage() {
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
     const [touchStart, setTouchStart] = useState<number | null>(null);
-    
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
+        checkIsMobile();
+        window.addEventListener('resize', checkIsMobile);
+        return () => window.removeEventListener('resize', checkIsMobile);
+    }, []);
+
     const navigate = useCallback((step: number) => {
         const newIndex = currentSlideIndex + step;
         if (newIndex >= 0 && newIndex < slidesData.length) {
@@ -245,41 +245,68 @@ export default function PresentationPage() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [navigate]);
     
-    const handleTouchStart = (e: React.TouchEvent) => {
-        setTouchStart(e.touches[0].clientX);
-    };
-
+    const handleTouchStart = (e: React.TouchEvent) => setTouchStart(e.touches[0].clientX);
     const handleTouchMove = (e: React.TouchEvent) => {
         if (touchStart === null) return;
         const currentX = e.touches[0].clientX;
         const diffX = touchStart - currentX;
-
-        if (Math.abs(diffX) > 50) { // Swipe threshold
-            if (diffX > 0) {
-                navigate(1); // Swipe left
-            } else {
-                navigate(-1); // Swipe right
-            }
-            setTouchStart(null); // Reset after swipe
+        if (Math.abs(diffX) > 50) {
+            if (diffX > 0) navigate(1);
+            else navigate(-1);
+            setTouchStart(null);
         }
     };
 
     const GlobalStyles = () => (
         <style>{`
-            :root { --main-bg: #F9FAFB; --accent-color: #F59E0B; }
+            :root { --main-bg: #F9FAFB; --accent-color: #D97706; }
             body, html { margin: 0; padding: 0; overflow: hidden; background-color: #ffffff; font-family: 'Inter', sans-serif; }
+            .desktop-container { position: relative; height: 100vh; width: 100vw; overflow: hidden; }
             .slide-container {
                 position: absolute; inset: 0;
                 display: flex; justify-content: center; align-items: center;
                 padding: 6rem 2rem;
-                transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+                transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
                 background-color: var(--main-bg);
             }
             .slide-container:first-child { background-color: white; }
+
+            .mobile-container {
+                height: 100vh;
+                overflow-y: auto;
+                scroll-snap-type: y mandatory;
+            }
+            .mobile-slide {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 4rem 1.5rem;
+                border-bottom: 1px solid #e5e7eb;
+                scroll-snap-align: start;
+                background-color: var(--main-bg);
+            }
+            .mobile-slide:first-child { background-color: white; }
+            .mobile-slide:last-child { border-bottom: none; }
         `}</style>
     );
 
     const progressPercentage = ((currentSlideIndex + 1) / slidesData.length) * 100;
+
+    if (isMobile) {
+        return (
+            <>
+                <GlobalStyles />
+                <div className="mobile-container">
+                    {slidesData.map((slide, index) => (
+                        <section key={index} className="mobile-slide">
+                            <SlideComponent slide={slide} isCurrent={true} />
+                        </section>
+                    ))}
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
@@ -289,14 +316,15 @@ export default function PresentationPage() {
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
             >
-                <div className="relative h-full w-full overflow-hidden">
+                <div className="desktop-container">
                     {slidesData.map((slide, index) => (
                        <div 
                             key={index} 
                             className="slide-container"
                             style={{
-                                transform: `translateX(${(index - currentSlideIndex) * 100}%)`,
-                                zIndex: index === currentSlideIndex ? 10 : 1,
+                                transform: `translateX(${index < currentSlideIndex ? -25 : (index > currentSlideIndex ? 100 : 0)}%)`,
+                                zIndex: index === currentSlideIndex ? 10 : (index < currentSlideIndex ? 1 : 5),
+                                transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
                             }}
                         >
                             <SlideComponent slide={slide} isCurrent={index === currentSlideIndex} />
